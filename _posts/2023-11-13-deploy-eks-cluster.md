@@ -3,16 +3,13 @@ title: Create an EKS cluster with eksctl and aws cli
 categories: [k8s]
 tags: [eks,k8s,aws,eksctl]
 ---
-
-# Create an EKS cluster with eksctl and aws cli
-
 ### Install aws cli 
 Install and aws cli from [here](https://aws.amazon.com/cli/)
 
 ### Install eksctl
 Install eksctl on you machine [here](https://eksctl.io/)
 
-### Create a clustter config
+### Defime the cluster config
 The cluster config file creates the eks cluster 
 
 **File:** ```01-cluster-config.yaml```
@@ -84,7 +81,7 @@ Set the account number in the cluster config file. Change **123** in the command
 sed -i 's/YOUR-ACCOUNT-NUMBER/123/g' 01-cluster-config.yaml
 ```
 
-### Create worker policy
+### Define worker policy for aws worker nodes
 Create policy for worker nodes in the cluster to able to pull images from your private ecr repository 
 
 **File:**  ```02-worker-iam-policy.json```
@@ -105,7 +102,7 @@ Create policy for worker nodes in the cluster to able to pull images from your p
 }
 ```
 
-### Deploy the policy
+### Deploy AWS policy for workerr nodes
 Run the following command in terminal
 ```bash
 aws iam create-policy --policy-name worker-policy --policy-document 02-worker-iam-policy.json
@@ -118,7 +115,7 @@ Run the following command in terminal
 eksctl create cluster -f 01-cluster-config.yaml
 ```
 
-### Emable OIDC
+### Enable OIDC for EKS cluster
 Enable OIDC on your cluster so that IRSA can be used in the cluster. This allows associating kubernetes service account roles to aws iam roles to allow pods and services to access aws services. 
 
 Set cluster name
