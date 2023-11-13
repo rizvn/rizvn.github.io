@@ -4,15 +4,15 @@ categories: [k8s]
 tags: [eks,k8s,aws,eksctl]
 ---
 ### Install aws cli 
-Install and aws cli from [here](https://aws.amazon.com/cli/)
+Install  aws cli from [here](https://aws.amazon.com/cli/)
 
 ### Install eksctl
-Install eksctl on you machine [here](https://eksctl.io/)
+Install eksctl from  [here](https://eksctl.io/)
 
-### Defime the cluster config
-The cluster config file creates the eks cluster 
-
+### Define the cluster config
 **File:** ```01-cluster-config.yaml```
+
+**Replace** YOUR-ACCOUNT-NUMBER with your aws account number
 
 ```yaml
 apiVersion: eksctl.io/v1alpha5
@@ -75,14 +75,8 @@ vpc:
         cidr: 10.0.6.0/24
 ```
 
-### Update the account in the cluster config
-Set the account number in the cluster config file. Change **123** in the command below to your actual aws acccount number
-```bash
-sed -i 's/YOUR-ACCOUNT-NUMBER/123/g' 01-cluster-config.yaml
-```
-
 ### Define worker policy for aws worker nodes
-Create policy for worker nodes in the cluster to able to pull images from your private ecr repository 
+Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
 
 **File:**  ```02-worker-iam-policy.json```
 ```json
