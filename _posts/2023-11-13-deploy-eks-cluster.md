@@ -31,7 +31,7 @@ nodeGroups:
     privateNetworking: true # If you want to use private networking for the nodes
     iam:
       attachPolicyARNs:
-        - arn:aws:iam:YOUR-ACCOUNT-NUMBER:aws:policy/workers-policy
+        - arn:aws:iam:YOUR-ACCOUNT-NUMBER:aws:policy/worker-policy
 
     # insatnce types for the nodes
     instanceType:
