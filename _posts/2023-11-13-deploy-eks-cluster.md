@@ -31,12 +31,11 @@ nodeGroups:
     privateNetworking: true # If you want to use private networking for the nodes
     iam:
       attachPolicyARNs:
-        - arn:aws:iam:YOUR-ACCOUNT-NUMBER:aws:policy/eks-workers  # Example policy
+        - arn:aws:iam:YOUR-ACCOUNT-NUMBER:aws:policy/workers-policy
 
     # insatnce types for the nodes
     instanceType:
       - m5.large
-      - t3.medium
       - c5.large
 
 
@@ -133,5 +132,4 @@ aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
 If oidc has not been set up, then set it up
 ```bash
 eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
-
 ```
