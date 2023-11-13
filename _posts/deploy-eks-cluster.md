@@ -1,5 +1,6 @@
 ----
 title: Hello 
+date: 2023-11-14 12:00:00 -500
 categories: [kubernetes, eks, aws]
 tags: [eks, kubernetes, k8s]
 ----
