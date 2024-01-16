@@ -96,7 +96,7 @@ Create policy for worker nodes in the cluster to able to pull images from your p
 }
 ```
 
-### Deploy AWS policy for workerr nodes
+### Deploy AWS policy for worker nodes
 Run the following command in terminal
 ```bash
 aws iam create-policy --policy-name worker-policy --policy-document 02-worker-iam-policy.json
