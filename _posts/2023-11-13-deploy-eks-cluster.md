@@ -12,8 +12,6 @@ Install eksctl from  [here](https://eksctl.io/)
 ### Define the cluster config
 **File:** ```01-cluster-config.yaml```
 
-**Replace** YOUR-ACCOUNT-NUMBER with your aws account number
-
 ```yaml
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
@@ -74,6 +72,13 @@ vpc:
         natGateway: true
         cidr: 10.0.6.0/24
 ```
+
+**Replace** YOUR-ACCOUNT-NUMBER with your aws account number in the file above this can be done using the following **sed** command
+
+```bash
+sed -i 's/arn:aws:iam:YOUR-ACCOUNT-NUMBER:/arn:aws:iam:111111111:/g' 01-cluster-config.yaml
+```
+
 
 ### Define worker policy for aws worker nodes
 Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
