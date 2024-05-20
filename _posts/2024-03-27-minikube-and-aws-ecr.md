@@ -10,12 +10,6 @@ Create a namespace in which the pods will be deployed
 kubetl create ns test
 ```
 
-Get ECR token from AWS 
-```bash
-ECR_TOKEN=$(aws ecr get-login-password --region eu-west-2)
-```
-
-
 Remove secret named regcred in test namespace, then create it. 
 
 **Note**

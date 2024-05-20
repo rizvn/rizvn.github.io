@@ -84,7 +84,7 @@ spec:
 EOF
 ```
 
-Dploy provisioner on kubernetes
+Deploy provisioner on kubernetes
 ``` bash
 helm repo add csi-driver-smb https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
 
