@@ -3,7 +3,7 @@ title: Integrate Minikube with AWS ECR
 categories: [k8s]
 tags: [eks,k8s,aws,minkikube]
 ---
-When testing images locally you may need to pull images from aws in your deployments. AWS ECR is a dokcer  
+When testing images locally you may need to pull images from aws in your deployments. AWS ECR is a docker  
 
 Create a namespace in which the pods will be deployed
 ```bash
