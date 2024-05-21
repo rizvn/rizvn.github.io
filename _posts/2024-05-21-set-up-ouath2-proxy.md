@@ -16,7 +16,7 @@ Generate cookie secret this is used to encrypt cookies, below is a bash command 
 dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64 | tr -d -- '\n' | tr -- '+/' '-_' ; echo
 ```
 
-Create file name: oauth2-proxy-values.yaml with contents. 
+Create values file for auth configuration `oauth2-proxy-values.yaml`
 ```yaml
 cat << EOF > oauth2-proxy-values.yaml 
 config:
