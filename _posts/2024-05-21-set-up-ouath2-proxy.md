@@ -1,5 +1,5 @@
 ---
-title: Set up oauth2 proxy with Azure AD
+title: Set up OAUTH2 proxy with Azure AD
 categories: [k8s]
 tags: [eks,k8s,aws,oauth, azure, oidc]
 ---
