@@ -9,7 +9,7 @@ This post is inspired by [this post](https://gateway.envoyproxy.io/v0.6.0/user/t
 
 This blog post will set up the following:
 
-![alt text](/assets/images/envoy-gateway.png "envoy-diagram")
+![alt text](/assets/img/envoy-gateway.png "envoy-diagram")
 
 There are: 
 - 2 services foo and bar they are in thier own namespaces
