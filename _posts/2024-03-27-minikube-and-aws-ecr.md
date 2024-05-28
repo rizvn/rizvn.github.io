@@ -7,7 +7,7 @@ When testing images locally you may need to pull images from aws in your deploym
 
 Create a namespace in which the pods will be deployed
 ```bash
-kubetl create ns test
+kubectl create ns test
 ```
 
 Remove secret named regcred in test namespace, then create it. 

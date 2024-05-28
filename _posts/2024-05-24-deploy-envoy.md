@@ -12,9 +12,9 @@ This blog post will set up the following:
 ![alt text](/assets/img/envoy-gateway.png "envoy-diagram")
 
 There are: 
-- 2 services foo and bar they are in thier own namespaces
+- 2 services foo and bar they are in their own namespaces
 - 2 tcp routes within the namespaces
-- gateway-01 class and assoociated proxy, the proxy is in the envoy-gatway-system namespace
+- gateway-01 class and associated proxy, the proxy is in the envoy-gateway-system namespace
 - gateway definition with listeners in gateway-01 namespace.
 
 First install envoy proxy system using helm
@@ -264,7 +264,7 @@ EOF
 ```
 
 
-If using minikube for testing, use minikube tunnel to associate ip to envoy proxy serioce
+If using minikube for testing, use minikube tunnel to associate ip to envoy proxy service
 ```bash
 minikube tunnel
 ```

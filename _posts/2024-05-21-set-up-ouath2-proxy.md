@@ -59,14 +59,14 @@ Replace the following:
 
 Deploy helm chart with values 
 ```bash 
-helm install oauth-proxy oauth2-proxy/oauth2-proxy -n outh-proxy --values oauth2-proxy-values.yaml 
+helm install oauth-proxy oauth2-proxy/oauth2-proxy -n oauth-proxy --values oauth2-proxy-values.yaml 
 ```
 
 
 
 Create ingress for oauth proxy. Minikube can be used to test this set up, when nginx can be exposed using `minikube tunnel`.
 ```yaml
-kubectl appky -n outh-proxy -f - <<EOF
+kubectl appky -n oauth-proxy -f - <<EOF
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

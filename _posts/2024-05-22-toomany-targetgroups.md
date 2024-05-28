@@ -3,7 +3,7 @@ title: TooManyTargets AWS NLB
 categories: [k8s]
 tags: [eks,k8s,aws, nlb, alb]
 ---
-On AWS EKS, loadbalancer's are creatd by setting the the service type to LoadBalancer. When created each port defined on the service will be associated with a TargetGroup. Each TargetGroup will be associated with an Node (EC2 isnstance) within the cluster. AWS NLB has target limit of 500, so if you have 10 ports and 51 nodes in your eks cluster you will quickly pass the limit on an NLB. 
+On AWS EKS, loadbalancer's are created by setting the the service type to LoadBalancer. Each port defined on the service will be associated with a TargetGroup. Each TargetGroup will be associated with an Node (EC2 instance) within the cluster. AWS NLB has target limit of 500, so if you have 10 ports and 51 nodes in your eks cluster you will quickly pass the limit on an NLB. 
 
 The service will report the following error event:
 ```yaml
