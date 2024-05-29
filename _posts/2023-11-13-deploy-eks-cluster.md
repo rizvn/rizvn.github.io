@@ -9,10 +9,15 @@ Install  aws cli from [here](https://aws.amazon.com/cli/)
 ### Install eksctl
 Install eksctl from  [here](https://eksctl.io/)
 
-### Define the cluster config
-**File:** ```01-cluster-config.yaml```
 
+### Set your aws account number 
+```bash
+export AWS_ACCOUNT=XXXXX
+```
+
+### Define cluster config
 ```yaml
+cat << EOF > 01-cluster-config.yaml
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
@@ -29,7 +34,7 @@ nodeGroups:
     privateNetworking: true # If you want to use private networking for the nodes
     iam:
       attachPolicyARNs:
-        - arn:aws:iam:YOUR-ACCOUNT-NUMBER:aws:policy/worker-policy
+        - arn:aws:iam:${AWS_ACCOUNT}:aws:policy/worker-policy
 
     # insatnce types for the nodes
     instanceType:
@@ -71,20 +76,15 @@ vpc:
         id: subnet-public-2-az-c
         natGateway: true
         cidr: 10.0.6.0/24
-```
-
-**Replace** YOUR-ACCOUNT-NUMBER with your aws account number in the file above this can be done using the following **sed** command
-
-```bash
-sed -i 's/arn:aws:iam:YOUR-ACCOUNT-NUMBER:/arn:aws:iam:111111111:/g' 01-cluster-config.yaml
+EOF
 ```
 
 
 ### Define worker policy for aws worker nodes
 Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
 
-**File:**  ```02-worker-iam-policy.json```
 ```json
+cat << EOF > 02-worker-iam-policy.json
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -99,17 +99,16 @@ Create policy for worker nodes in the cluster to able to pull images from your p
     }
   ]
 }
+EOF
 ```
 
 ### Deploy AWS policy for worker nodes
-Run the following command in terminal
 ```bash
 aws iam create-policy --policy-name worker-policy --policy-document 02-worker-iam-policy.json
 ```
 
 
 ### Deploy the eks cluster 
-Run the following command in terminal
 ```bash
 eksctl create cluster -f 01-cluster-config.yaml
 ```
