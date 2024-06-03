@@ -15,6 +15,35 @@ Install eksctl from  [here](https://eksctl.io/)
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 ```
 
+
+
+### Define worker policy for aws worker nodes
+Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
+
+```json
+cat << EOF > worker-iam-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+```
+
+### Deploy AWS policy for worker nodes
+```bash
+aws iam create-policy --policy-name worker-policy --policy-document worker-iam-policy.json
+```
+
 ### Define cluster config
 ```yaml
 cat << EOF > 01-cluster-config.yaml
@@ -93,32 +122,6 @@ EOF
 ```
 
 
-### Define worker policy for aws worker nodes
-Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
-
-```json
-cat << EOF > 02-worker-iam-policy.json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "ecr:BatchCheckLayerAvailability"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-```
-
-### Deploy AWS policy for worker nodes
-```bash
-aws iam create-policy --policy-name worker-policy --policy-document 02-worker-iam-policy.json
-```
 
 
 ### Deploy the eks cluster 
