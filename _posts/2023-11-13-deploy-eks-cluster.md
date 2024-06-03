@@ -67,9 +67,11 @@ addons:
       - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
 
 
-nodeGroups:
+managedNodeGroups:
   - name: workers
+    labels: { role: workers }
     desiredCapacity: 3
+    volumeSize: 200
     instancesDistribution:
       maxPrice: 0.085 # Set an appropriate max price for Spot instances
     availabilityZones: ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
@@ -89,6 +91,15 @@ nodeGroups:
       - subnet-0-az-a
       - subnet-1-az-b
       - subnet-2-az-c
+    
+    # taint nodes e.g only allow certain type of node group
+    #taints:
+    #  - key: ingress-only
+    #    value: "true"
+    #    effect: NoSchedule
+    #  - key: ingress-only
+    #    value: "true"
+    #    effect: NoExecute
 
 vpc:
   # create vpc with this cidr
