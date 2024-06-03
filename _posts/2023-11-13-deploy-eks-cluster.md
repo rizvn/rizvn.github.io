@@ -12,7 +12,7 @@ Install eksctl from  [here](https://eksctl.io/)
 
 ### Set your aws account number 
 ```bash
-export AWS_ACCOUNT=XXXXX
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 ```
 
 ### Define cluster config
@@ -37,7 +37,7 @@ nodeGroups:
     privateNetworking: true # If you want to use private networking for the nodes
     iam:
       attachPolicyARNs:
-        - arn:aws:iam:${AWS_ACCOUNT}:aws:policy/worker-policy
+        - arn:aws:iam:${AWS_ACCOUNT_ID}:aws:policy/worker-policy
 
     # insatnce types for the nodes
     instanceType:
