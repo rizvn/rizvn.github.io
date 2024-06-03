@@ -58,7 +58,6 @@ metadata:
 iam:
   withOIDC: true
 
-
   # service accounts and policy from common operators
   serviceAccounts:
   - metadata:
@@ -118,11 +117,40 @@ addons:
       - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
 
 # deploy karpenter
-karpenter:
-  version: 'v0.20.0' # Exact version must be provided
-  createServiceAccount: true # default is false
-  withSpotInterruptionQueue: true # adds all required policies and rules for supporting Spot Interruption Queue, default is false
+#karpenter:
+#  version: 'v0.20.0' # Exact version must be provided
+#  createServiceAccount: true # default is false
+#  withSpotInterruptionQueue: true # adds all required policies and rules for supporting # Spot Interruption Queue, default is false
 
+
+
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+  accessEntries:
+    - principalARN: arn:aws:iam::111122223333:user/my-user-name
+      type: STANDARD
+      kubernetesGroups: # optional Kubernetes groups
+        - group1 # groups can used to give permissions via RBAC
+        - group2
+
+    - principalARN: arn:aws:iam::111122223333:role/role-name-1
+      accessPolicies: # optional access polices
+        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy
+          accessScope:
+            type: namespace
+            namespaces:
+              - default
+              - my-namespace
+              - dev-*
+
+    - principalARN: arn:aws:iam::111122223333:role/admin-role
+      accessPolicies: # optional access polices
+        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+          accessScope:
+            type: cluster
+
+    - principalARN: arn:aws:iam::111122223333:role/role-name-2
+      type: EC2_LINUX
 
 managedNodeGroups:
   - name: workers
