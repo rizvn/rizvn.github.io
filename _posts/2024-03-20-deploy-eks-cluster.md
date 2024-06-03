@@ -16,34 +16,6 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output tex
 ```
 
 
-
-### Define worker policy for aws worker nodes
-Create policy for worker nodes in the cluster to able to pull images from your private ecr repository.
-
-```json
-cat << EOF > worker-iam-policy.json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ecr:GetDownloadUrlForLayer",
-        "ecr:BatchGetImage",
-        "ecr:BatchCheckLayerAvailability"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-```
-
-### Deploy AWS policy for worker nodes
-```bash
-aws iam create-policy --policy-name worker-policy --policy-document worker-iam-policy.json
-```
-
 ### Define cluster config
 ```yaml
 cat << EOF > 01-cluster-config.yaml
@@ -111,59 +83,36 @@ iam:
 
 # to enable network policies
 addons:
-  - name: vpc-cni
-    version: latest
-    attachPolicyARNs:
-      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+- name: vpc-cni
+  # all below properties are optional
+  version: 1.14.0
+  tags:
+    team: eks
+  attachPolicyARNs:
+  - arn:aws:iam::account:policy/AmazonEKS_CNI_Policy
+- name: coredns
+- name: kube-proxy
 
-# deploy karpenter
-#karpenter:
-#  version: 'v0.20.0' # Exact version must be provided
-#  createServiceAccount: true # default is false
-#  withSpotInterruptionQueue: true # adds all required policies and rules for supporting # Spot Interruption Queue, default is false
-
-
-
-accessConfig:
-  authenticationMode: API_AND_CONFIG_MAP
-  accessEntries:
-    - principalARN: arn:aws:iam::111122223333:user/my-user-name
-      type: STANDARD
-      kubernetesGroups: # optional Kubernetes groups
-        - group1 # groups can used to give permissions via RBAC
-        - group2
-
-    - principalARN: arn:aws:iam::111122223333:role/role-name-1
-      accessPolicies: # optional access polices
-        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy
-          accessScope:
-            type: namespace
-            namespaces:
-              - default
-              - my-namespace
-              - dev-*
-
-    - principalARN: arn:aws:iam::111122223333:role/admin-role
-      accessPolicies: # optional access polices
-        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
-          accessScope:
-            type: cluster
-
-    - principalARN: arn:aws:iam::111122223333:role/role-name-2
-      type: EC2_LINUX
 
 managedNodeGroups:
   - name: workers
     labels: { role: workers }
     desiredCapacity: 2
     volumeSize: 100
-    instancesDistribution:
-      maxPrice: 0.085 # Set an appropriate max price for Spot instances
     availabilityZones: ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
-    privateNetworking: true # If you want to use private networking for the nodes
+    privateNetworking: true 
     iam:
-      attachPolicyARNs:
-        - arn:aws:iam:${AWS_ACCOUNT_ID}:aws:policy/worker-policy
+      instanceProfileARN: arn:aws:iam::${AWS_ACCOUNT_ID}:instance-profile/EKSWorkerNodeRole
+      instanceRoleName: EKSWorkerNodeRole
+      attachPolicy:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "ecr:GetDownloadUrlForLayer"
+              - "ecr:BatchGetImage"
+              - "ecr:BatchCheckLayerAvailability"
+            Resource: "*"
 
     # instance types for the nodes
     instanceType:
@@ -217,6 +166,43 @@ vpc:
 
     nat:
       gateway: HighlyAvailable 
+
+
+# deploy karpenter
+#karpenter:
+#  version: 'v0.20.0' # Exact version must be provided
+#  createServiceAccount: true # default is false
+#  withSpotInterruptionQueue: true # adds all required policies and rules for supporting # Spot Interruption Queue, default is false
+
+
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+  accessEntries:
+    - principalARN: arn:aws:iam::111122223333:user/my-user-name
+      type: STANDARD
+      kubernetesGroups: # optional Kubernetes groups
+        - group1 # groups can used to give permissions via RBAC
+        - group2
+
+    - principalARN: arn:aws:iam::111122223333:role/role-name-1
+      accessPolicies: # optional access polices
+        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy
+          accessScope:
+            type: namespace
+            namespaces:
+              - default
+              - my-namespace
+              - dev-*
+
+    - principalARN: arn:aws:iam::111122223333:role/admin-role
+      accessPolicies: # optional access polices
+        - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+          accessScope:
+            type: cluster
+
+    - principalARN: arn:aws:iam::111122223333:role/role-name-2
+      type: EC2_LINUX
+
 EOF
 ```
 
