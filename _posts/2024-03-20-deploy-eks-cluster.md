@@ -84,11 +84,11 @@ iam:
 # to enable network policies
 addons:
 - name: vpc-cni
-    version: 1.17.0
-    attachPolicyARNs: 
+  version: 1.17.0
+  attachPolicyARNs: 
     - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy 
-    configurationValues: |-
-      enableNetworkPolicy: "true"
+  configurationValues: |-
+    enableNetworkPolicy: "true"
 - name: coredns
 - name: kube-proxy
 
