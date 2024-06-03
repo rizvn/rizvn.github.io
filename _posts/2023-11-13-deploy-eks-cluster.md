@@ -25,8 +25,18 @@ metadata:
   name: my-eks-cluster
   region: eu-west-2
 
+# to enable oidc (irsa)
 iam:
   withOIDC: true
+
+
+# to enable network policies
+addons:
+  - name: vpc-cni
+    version: latest
+    attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+
 
 nodeGroups:
   - name: workers
@@ -39,7 +49,7 @@ nodeGroups:
       attachPolicyARNs:
         - arn:aws:iam:${AWS_ACCOUNT_ID}:aws:policy/worker-policy
 
-    # insatnce types for the nodes
+    # instance types for the nodes
     instanceType:
       - m5.large
       - c5.large
