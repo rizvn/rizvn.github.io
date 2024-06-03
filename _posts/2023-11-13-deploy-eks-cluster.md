@@ -25,6 +25,9 @@ metadata:
   name: my-eks-cluster
   region: eu-west-2
 
+iam:
+  withOIDC: true
+
 nodeGroups:
   - name: workers
     desiredCapacity: 3
@@ -111,27 +114,4 @@ aws iam create-policy --policy-name worker-policy --policy-document 02-worker-ia
 ### Deploy the eks cluster 
 ```bash
 eksctl create cluster -f 01-cluster-config.yaml
-```
-
-### Enable OIDC for EKS cluster
-Enable OIDC on your cluster so that IRSA can be used in the cluster. This allows associating kubernetes service account roles to aws iam roles to allow pods and services to access aws services. 
-
-Set cluster name
-```bash
-export cluster_name=my-eks-cluster
-```
-
-Retrieve oidc_id
-``` bash
-oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5)
-```
-
-Check whether oidc has already been set up
-```bash
-aws iam list-open-id-connect-providers | grep $oidc_id | cut -d "/" -f4
-```
-
-If oidc has not been set up, then set it up
-```bash
-eksctl utils associate-iam-oidc-provider --cluster $cluster_name --approve
 ```
