@@ -59,6 +59,57 @@ iam:
   withOIDC: true
 
 
+  # service accounts and policy from common operators
+  serviceAccounts:
+  - metadata:
+      name: aws-load-balancer-controller
+      namespace: kube-system
+    wellKnownPolicies:
+      awsLoadBalancerController: true
+  - metadata:
+      name: ebs-csi-controller-sa
+      namespace: kube-system
+    wellKnownPolicies:
+      ebsCSIController: true
+  - metadata:
+      name: efs-csi-controller-sa
+      namespace: kube-system
+    wellKnownPolicies:
+      efsCSIController: true
+  - metadata:
+      name: external-dns
+      namespace: kube-system
+    wellKnownPolicies:
+      externalDNS: true
+  - metadata:
+      name: cert-manager
+      namespace: cert-manager
+    wellKnownPolicies:
+      certManager: true
+  - metadata:
+      name: cluster-autoscaler
+      namespace: kube-system
+      labels: {aws-usage: "cluster-ops"}
+    wellKnownPolicies:
+      autoScaler: true
+  - metadata:
+      name: autoscaler-service
+      namespace: kube-system
+    attachPolicy: # inline policy can be defined along with `attachPolicyARNs`
+      Version: "2012-10-17"
+      Statement:
+      - Effect: Allow
+        Action:
+        - "autoscaling:DescribeAutoScalingGroups"
+        - "autoscaling:DescribeAutoScalingInstances"
+        - "autoscaling:DescribeLaunchConfigurations"
+        - "autoscaling:DescribeTags"
+        - "autoscaling:SetDesiredCapacity"
+        - "autoscaling:TerminateInstanceInAutoScalingGroup"
+        - "ec2:DescribeLaunchTemplateVersions"
+        Resource: '*'
+
+
 # to enable network policies
 addons:
   - name: vpc-cni
@@ -66,12 +117,18 @@ addons:
     attachPolicyARNs:
       - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
 
+# deploy karpenter
+karpenter:
+  version: 'v0.20.0' # Exact version must be provided
+  createServiceAccount: true # default is false
+  withSpotInterruptionQueue: true # adds all required policies and rules for supporting Spot Interruption Queue, default is false
+
 
 managedNodeGroups:
   - name: workers
     labels: { role: workers }
-    desiredCapacity: 3
-    volumeSize: 200
+    desiredCapacity: 2
+    volumeSize: 100
     instancesDistribution:
       maxPrice: 0.085 # Set an appropriate max price for Spot instances
     availabilityZones: ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
@@ -129,6 +186,9 @@ vpc:
         id: subnet-public-2-az-c
         natGateway: true
         cidr: 10.0.6.0/24
+
+    nat:
+      gateway: HighlyAvailable 
 EOF
 ```
 
