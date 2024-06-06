@@ -2,6 +2,7 @@
 title: Create an EKS cluster with eksctl and aws cli
 categories: [k8s]
 tags: [eks,k8s,aws,eksctl]
+published: false
 ---
 ### Install aws cli 
 Install  aws cli from [here](https://aws.amazon.com/cli/)
