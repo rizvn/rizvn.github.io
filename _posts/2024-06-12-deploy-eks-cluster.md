@@ -14,7 +14,7 @@ The following tapology will be deployed:
   
 
 -  EKS cluster with
-   - OIDC enable for IRSA
+   - OIDC enabled for IRSA
    - With Addons
      - CoreDNS
      - VPC CNI with Network policy support
@@ -23,14 +23,9 @@ The following tapology will be deployed:
 - Ingress-only nodegroup 
 - General nodegroup
 
-Clone the git repo
-```bash 
-git clone git@github.com:rizvn/eks-terraform.git
 
-cd eks-terraform
-```
 
-Additional modules are defined in under the extras and can enabled through values in `01-variables.tf`
+Additional modules are defined under the extras and can enabled through values in `01-variables.tf`
 
 Additional modules include:
 - AWS Load balancer
@@ -40,6 +35,13 @@ Additional modules include:
 - Users (IAM users with EKS Access)
 - EFS fs connected to the EKS cluster using EFS CSI driver
 
+
+Clone the git repo
+```bash 
+git clone git@github.com:rizvn/eks-terraform.git
+
+cd eks-terraform
+```
 
 Set Default AWS Profile to use. This should be the profile that has the necessary permissions to create the resources in the account
 ```bash
