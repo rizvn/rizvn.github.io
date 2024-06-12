@@ -3,7 +3,7 @@ title: Deploy EKS cluster with Terraform
 categories: [k8s]
 tags: [eks,k8s,aws, terraform]
 ---
-The aim of this terraform project to is to create a cluster that is ready for use with all the necessary addons and features enabled.
+The aim of this terraform project to is to create a ready to cluster with all the necessary addons and features enabled.
 
 All the source is available here: [https://github.com/rizvn/eks-terraform](https://github.com/rizvn/eks-terraform)
 
