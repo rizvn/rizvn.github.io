@@ -3,20 +3,10 @@ title: Deploy EKS cluster with Terraform
 categories: [k8s]
 tags: [eks,k8s,aws, terraform]
 ---
-Deploy EKS Cluster with Terraform 
-
-Clone the git repo
-```bash 
-git clone git@github.com:rizvn/eks-terraform.git
-
-cd eks-terraform
-```
-
 
 The following tapology will be deployed:
 ![alt text](/assets/img/eks-terraform.svg "eks-terraform")
 
-The based scripts will create 
 - VPC with 
   - 3 public subnets
   - 3 private subnets
@@ -33,6 +23,13 @@ The based scripts will create
 - Ingress-only nodegroup 
 - General nodegroup
 
+Clone the git repo
+```bash 
+git clone git@github.com:rizvn/eks-terraform.git
+
+cd eks-terraform
+```
+
 Additional modules are defined in under the extras and can enabled through values in `01-variables.tf`
 
 Additional modules include:
@@ -44,8 +41,6 @@ Additional modules include:
 - EFS fs connected to the EKS cluster using EFS CSI driver
 
 
-
-# Deployment
 Set Default AWS Profile to use. This should be the profile that has the necessary permissions to create the resources in the account
 ```bash
 export AWS_PROFILE=test
