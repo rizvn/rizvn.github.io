@@ -38,6 +38,8 @@ Additional modules are configured through `04-extras.tf`. The following modules 
 - Nginx Ingress (internal and external)
 - Users (IAM users with EKS Access)
 - EFS fs connected to the EKS cluster using EFS CSI driver
+- EBS CSI driver for gp3 volumes
+- AWS VPN Client for remote access to private subnets
 
 
 Clone the git repo
