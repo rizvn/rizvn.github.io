@@ -13,14 +13,14 @@ Bitnami's sealed secrets allow secure storage of secrets in plain text such as i
 Apps continue working with existing k8 `Secret`. 
 
 
-
+### SetUP
 Add helm repository for sealed-secrets
 ```bash
 helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
 ```
 
 Create a values file for the sealed-secrets helm chart, this will enable the ingress and set the
-hostname and path for the cert
+hostname and path for the cert. *This assumed there is an ingress class named nginx n the cluster. Change the ingressClassName or use local file approach outlined below if it  isn't.*
 ```yaml
 cat <<EOF > sealed-secrets-values.yaml
 fullnameOverride: sealed-secrets
