@@ -13,7 +13,7 @@ Bitnami's sealed secrets allow secure storage of secrets in plain text such as i
 Apps continue working with existing k8 `Secret`. 
 
 
-### SetUP
+### Set Up
 Add helm repository for sealed-secrets
 ```bash
 helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
