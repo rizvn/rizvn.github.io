@@ -72,7 +72,7 @@ Set up argo-values.yaml
 ```yaml
 cat <<EOF  > argo-values.yaml
 global:
-  # no domain specified so *:80 is routed to ingress on the host
+  # no domain specified so *:80 is routed to argo through the ingress
   domain: 
 configs:
   params:
