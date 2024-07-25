@@ -109,3 +109,4 @@ helm install argocd argo/argo-cd -n argocd --create-namespace -f argo-values.yam
 ```
 
 Once deployed argo should be available on [http://localhost:80](http://localhost:80)
+credentials are `admin` and `password123ABC`
