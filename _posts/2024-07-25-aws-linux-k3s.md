@@ -42,6 +42,7 @@ curl -sfL https://get.k3s.io | sh -s - --docker --disable traefik
 
 Symlink kubeconfig to default location
 ```bash
+mkdir -p ~/.kube
 ln -s /etc/rancher/k3s/k3s.yaml ~/.kube/config
 ```
 
