@@ -6,27 +6,11 @@ tags: [eks,k8s,aws]
 K3s is an option for deploying k8s when a full k8s environment may not be required, for instance for development and testing.  This post describe how to set up k3s on Amazon Linux 2 running on EC2. 
 
 The following components are deployed:
-- docker
 - k3s
 - ingress nginx
 - helm
 - argocd
 
-
-Install docker, since this deployment will use docker as a container runtime. The default runtime is containerd, which is installed by default. This step can be skipped if using containerd runtime.
-```bash
-sudo yum update
-
-sudo yum install docker
-
-sudo usermod -a -G docker ec2-user
-
-id ec2-user
-
-newgrp docker
-
-sudo systemctl enable docker.service
-```
 
 
 Set kubeconfig permissions to be accessible by non-root users
@@ -36,7 +20,7 @@ export K3S_KUBECONFIG_MODE="644"
 
 Install k3s with docker and without Traefik, ingress-nginx will be used instead
 ```bash
-curl -sfL https://get.k3s.io | sh -s - --docker --disable traefik
+curl -sfL https://get.k3s.io | sh -s - --disable traefik
 ```
 
 
@@ -46,6 +30,10 @@ mkdir -p ~/.kube
 ln -s /etc/rancher/k3s/k3s.yaml ~/.kube/config
 ```
 
+Check k3s status
+```bash
+kubectl get nodes
+```
 
 Install helm 
 ```bash
@@ -63,12 +51,13 @@ helm repo update
 helm install internal-ingress ingress-nginx/ingress-nginx \
 --namespace internal-ingress   \
 --create-namespace             \
---set controller.ingressClassResource.name="nginx \
+--set controller.ingressClassResource.name="nginx" \
 --set controller.ingressClass="nginx" \
---set controller.defaultBackendService.enabled=true   
+--set controller.defaultBackendService.enabled=true
 ```
 
-Set up argo-values.yaml 
+Set up argo-values.yaml.
+Remember to escape the $ with a backslash (\$), since cat is used to create this file
 ```yaml
 cat <<EOF  > argo-values.yaml
 global:
@@ -82,7 +71,7 @@ configs:
   secret:
     ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
     ##  htpasswd -nbBC 10 "" 'password123ABC' | tr -d ':\n' | sed 's/$2y/$2a/'
-    argocdServerAdminPassword: "$2a$10$3QBVJfaeB..rs4lwjkhwXuC1Uj.yj/hCWX3PnLxklnqyQERpOaCci"
+    argocdServerAdminPassword: "\$2a\$10\$vvKImPs2Bc..vjaeM3sHW.aVADxpLmQmO8XFH/8ZbL0pWonBYwwv2"
     
 server:
   ingress:
