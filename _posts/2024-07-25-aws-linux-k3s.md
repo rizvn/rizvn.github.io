@@ -40,6 +40,12 @@ curl -sfL https://get.k3s.io | sh -s - --docker --disable traefik
 ```
 
 
+Symlink kubeconfig to default location
+```bash
+ln -s /etc/rancher/k3s/k3s.yaml ~/.kube/config
+```
+
+
 Install helm 
 ```bash
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
