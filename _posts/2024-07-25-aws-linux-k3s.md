@@ -57,7 +57,7 @@ helm install internal-ingress ingress-nginx/ingress-nginx \
 ```
 
 Set up argo-values.yaml.
-Remember to escape the $ with a backslash (\$), since cat is used to create this file
+Remember to escape the $ with a backslash (\\$), since cat is used to create this file
 ```yaml
 cat <<EOF  > argo-values.yaml
 global:
@@ -99,3 +99,5 @@ helm install argocd argo/argo-cd -n argocd --create-namespace -f argo-values.yam
 
 Once deployed argo should be available on [http://localhost:80](http://localhost:80)
 credentials are `admin` and `password123ABC`
+
+After login, change the password to something more secure.
