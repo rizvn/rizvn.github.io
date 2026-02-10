@@ -4,7 +4,7 @@ categories: [arcitecture]
 tags: [architecture,monolith,modular]
 published: false
 ---
-Microservices are a popular architectural style for building scalable and maintainable applications. However, they also introduce complexity and overhead in terms. Microservices are great for large application with many teams working on different parts of the application, but for smaller applications or teams, a modular monolith can be a better choice. 
+Microservices are a popular architectural style for building scalable and maintainable applications. However, they also introduce complexity and overhead. Microservices are great for large applications with many teams working on different parts of the application, but for smaller applications and teams, a modular monolith can be a better choice.  
 
 Below is a comparison between microservices and modular monoliths for small teams and applications.
 
