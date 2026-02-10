@@ -32,7 +32,8 @@ the application will only run database migrations and then exit. This can be use
 Module dependencies are easier to manage in a monolith, as all modules are part of the same codebase. This allows you to easily coordinate changes across modules, and also makes it easier to refactor code as needed. In a microservices architecture, coordinating changes across services can be more complex, as each service may have its own codebase and deployment pipeline.
 
 
-### Below is package structure for a modular monolith application. Each module is organized into its own package in java, and the main application is responsible for coordinating the modules.
+### Module Structure
+Below is package structure for a modular monolith application. Each module is organized into its own package in java, and the main application is responsible for coordinating the modules.
 
 ```txt
 com.example.app
@@ -51,22 +52,15 @@ com.example.app
     └── Module3Controller.java
 ```
 
-The diagram belows how a stateless modular monolith can be horizontally scaled by adding more instances of the application. Its simple 3 tier architecture with a load balancer in front of multiple instances of the application, which can be scaled up or down as needed. State is stored in a shared database, cache or other external storage (nfs), which allows the application to be stateless and easily scalable.
-```txt
-          +------------------+
-          |   Load Balancer  |
-          +------------------+
-                   |
-        +----------------------+
-        |                      |
-+------------------+    +------------------+
-|   Application    |    |   Application    |
-|     Instance 1   |    |     Instance 2   |
-+------------------+    +------------------+
-    |                            |
-    +---+-------+-------+--------+
-                |            |
-   +----------+  
-   | Database | 
-   +----------+
-``` 
+
+### Deployment
+The diagram below shows how such a monolith can be deployed in a scalable way.
+
+![alt text](/assets/img/scalable-monolith.svg "scalable-monolith architecture")
+
+
+1. Loadbalancers can be configured to only route traffic to instances with label: "HandleRequests=true". This allows instances to be used for different purposes.
+
+2. Environment variable such as Mode is used to control the mode of operation for the application. For example, you can have a mode performing maintenance tasks only such as Migrating the db. 
+
+
