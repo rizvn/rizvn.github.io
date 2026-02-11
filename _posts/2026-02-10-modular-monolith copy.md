@@ -10,7 +10,7 @@ Below is a comparison between microservices and modular monoliths for small team
 | Aspect          | Microservices                                                                                      | Modular Monolith                                                         |
 |-----------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
 | **Deployment** | Multiple services to manage, version, and deploy independently                                      | Single artifact; simpler deployment process                              |
-| **Maintainability in Small Teams)** | High overhead; teams need expertise across infrastructure and DevOps           | Better fit; easier to understand and maintain single codebase            |
+| **Maintainability in Small Teams** | High overhead; teams need expertise across infrastructure and DevOps           | Better fit; easier to understand and maintain single codebase            |
 | **API Spec Coordination** | Requires formal API contracts and documentation; changes need careful versioning         | Direct code coordination; changes are immediately visible across modules |
 | **Versioning Between Dependencies** | Complex vesioning; services must support multiple API versions                   | Easier to refactor; all modules updated together in same release         |
 
