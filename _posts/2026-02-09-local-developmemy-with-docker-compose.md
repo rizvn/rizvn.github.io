@@ -2,7 +2,6 @@
 title: Local Development with Docker Compose
 categories: [arcitecture]
 tags: [docker,compose]
-published: false
 ---
 
 Applications generally have external dependencies, such as databases, message queues, and other services. Setting up and managing these dependencies can be time-consuming and error-prone, especially for developers who are new to the application. Docker Compose is a tool that allows you to define and manage multi-container Docker applications. It provides a simple way to set up and run your application and its dependencies in a consistent environment.
