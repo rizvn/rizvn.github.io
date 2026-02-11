@@ -18,14 +18,13 @@ Below is a comparison between microservices and modular monoliths for small team
 When starting a new project, it can be beneficial to start with a modular monolith architecture. This allows you to build a single application that is organized into modules, which can be developed and tested independently. As the application grows, you can then refactor it into microservices as needed.
 
 ### Horizontal Scale
-The make the monolith horizontally scalable make sure it is stateless. This means that the application should not rely on any in-memory state, and should instead use a database or other external storage for all stateful data. This allows you to easily scale the application horizontally by adding more instances, and also makes it easier to refactor into microservices later on.
+To make the monolith horizontally scalable make sure it is stateless. This means that the application should not rely on any in-memory state, and should instead use a database or other external storage for all stateful data. This allows you to easily scale the application horizontally by adding more instances, and also makes it easier to refactor into microservices later on. The statefull services such as databases can be scaled independently of the application.
 
 ### Feature Flags
-All functionality is one artefact which makes deployments are simpler. You can also use feature flags to enable or disable features as needed, which allows you to deploy new features without affecting the entire application. Environment variables can be used to control the features.
+All functionality is in onne artefact which makes deployments simpler. You can also use feature flags to enable or disable features as needed, which allows you to deploy new features without affecting the entire application. Environment variables can be used to control the features.
 
 ## Modes of operation
-Similar to feature flags, you can also have different modes of operation for the application. For example, use an environment variable to run application in db migration mode. Where
-the application will only run database migrations and then exit. This can be useful for performing maintenance tasks or running the application in a maintenance mode
+Similar to feature flags, you can also have different modes of operation. For example, using an environment variable to run application in db migration mode, where the application will only run database migrations and then exit. This can be useful for performing maintenance tasks as jobs or running the application to only serve a specific function.
 
 ### Coordination between dependencies
 Module dependencies are easier to manage in a monolith, as all modules are part of the same codebase. This allows you to easily coordinate changes across modules, and also makes it easier to refactor code as needed. In a microservices architecture, coordinating changes across services can be more complex, as each service may have its own codebase and deployment pipeline.
